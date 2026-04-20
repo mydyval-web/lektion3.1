@@ -1,8 +1,8 @@
 <script>
 	import { createSubscriber } from 'svelte/reactivity';
 
-	let username = $state('');
-    let password = $state('');
+	let username = $state('user');
+	let password = $state('password');
 
 	const createUser = async () => {
 		const response = await fetch('/api/user', {
@@ -46,5 +46,6 @@
 </div>
 
 <div>
-    <button class="btn btn-primary" on:click={createUser}>Opret bruger</button>
+    <button class="btn btn-primary" onclick={createUser}>  Opret bruger
+    </button>
 </div>
