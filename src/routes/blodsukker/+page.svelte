@@ -1,6 +1,13 @@
 <script>
+
+	import { goto } from '$app/navigation';
+
 	let value = $state('');
 	let username = $state('');
+
+	let lastValue = $state('');
+	let statusText = $state('');
+	let statusClass = $state('');
 
 	$effect(() => {
 		username = localStorage.getItem('username') || '';
@@ -14,15 +21,32 @@
 		});
 
 		if (res.ok) {
-			alert('Gemt!');
-			value = '';
-		} else {
-			alert('Fejl!');
+			const numberValue = Number(value);
+
+			lastValue = value;
+
+			if (numberValue < 4) {
+				statusText = 'Lavt blodsukker';
+				statusClass = 'bg-yellow-200';
+			} else if (numberValue <= 7) {
+				statusText = 'Normalt blodsukker';
+				statusClass = 'bg-green-200';
+			} else {
+				statusText = 'Højt blodsukker';
+				statusClass = 'bg-red-200';
+			}
 		}
+	};
+	const goToRaad = () => {
+		goto('/raad');
+	};
+
+	const goToData = () => {
+		goto('/data');
 	};
 </script>
 
-<h1 class="text-center text-2xl font-bold"> Registrer dit blodsukker </h1>
+<h1 class="text-center text-2xl font-bold">Registrer dit blodsukker</h1>
 
 <div class="flex justify-center">
 	<div class="flex flex-col items-center gap-4">
@@ -35,6 +59,22 @@
 
 		<button class="btn btn-primary w-72" onclick={saveValue}>
 			Gem værdi
+		</button>
+
+		{#if lastValue}
+			<div class={`w-72 rounded-lg p-4 text-center font-bold ${statusClass}`}>
+				<p>Seneste værdi: {lastValue}</p>
+				<p>{statusText}</p>
+			</div>
+		{/if}
+
+		<!-- Knapper vises altid -->
+		<button class="btn w-72" onclick={goToRaad}>
+			Gode råd
+		</button>
+
+		<button class="btn w-72" onclick={goToData}>
+			Se tidligere målinger
 		</button>
 	</div>
 </div>
