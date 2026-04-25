@@ -1,20 +1,30 @@
 <script>
+	import { onMount } from 'svelte';
+
 	let values = $state([]);
 	let loading = $state(true);
 
-	$effect(() => {
-		loadValues();
-	});
-
 	const loadValues = async () => {
-		const res = await fetch('/api/blodsukker');
+		const token = localStorage.getItem('token');
+
+		const res = await fetch('/api/blodsukker', {
+			headers: {
+				Authorization: `Bearer ${token}`
+			}
+		});
 
 		if (res.ok) {
 			values = await res.json();
+		} else {
+			console.log('Ikke logget ind eller fejl');
 		}
 
 		loading = false;
 	};
+
+	onMount(() => {
+		loadValues();
+	});
 </script>
 
 <h1 class="text-center text-2xl font-bold">Tidligere målinger</h1>

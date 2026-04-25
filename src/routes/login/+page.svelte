@@ -1,5 +1,4 @@
 <script>
-	import { createSubscriber } from 'svelte/reactivity';
 	import { goto } from '$app/navigation';
 
 	let username = $state('');
@@ -15,13 +14,13 @@
 		const data = await response.json();
 
 		if (response.ok) {
-			localStorage.setItem('username', username);
+			localStorage.setItem('token', data.token);
+
 			goto('/blodsukker');
 		} else {
 			alert('Login fejlet!');
 		}
 	};
-
 	const goToOpret = () => {
 		goto('/opret');
 	};
