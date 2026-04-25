@@ -25,14 +25,20 @@
 
 			lastValue = value;
 
-			if (numberValue < 4) {
-				statusText = 'Lavt blodsukker';
+			if (numberValue < 3) {
+				statusText = 'Kritisk lav';
+				statusClass = 'bg-red-200';
+			} else if (numberValue < 4) {
+				statusText = 'For lavt';
 				statusClass = 'bg-yellow-200';
-			} else if (numberValue <= 7) {
-				statusText = 'Normalt blodsukker';
+			} else if (numberValue <= 10) {
+				statusText = 'Inden for normalt område';
 				statusClass = 'bg-green-200';
+			} else if (numberValue <= 15) {
+				statusText = 'For højt';
+				statusClass = 'bg-yellow-200';
 			} else {
-				statusText = 'Højt blodsukker';
+				statusText = 'Kritisk høj';
 				statusClass = 'bg-red-200';
 			}
 		}
