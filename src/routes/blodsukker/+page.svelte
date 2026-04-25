@@ -1,41 +1,39 @@
 <script>
-	let blodsukker = $state('');
+	let value = $state('');
+	let username = $state('');
 
-	const gemBlodsukker = async () => {
-		const response = await fetch('/api/blodsukker', {
+	$effect(() => {
+		username = localStorage.getItem('username') || '';
+	});
+
+	const saveValue = async () => {
+		const res = await fetch('/api/blodsukker', {
 			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ value: blodsukker })
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ value })
 		});
 
-		await response.json();
-
-		if (response.ok) {
-			alert('Blodsukker gemt!');
+		if (res.ok) {
+			alert('Gemt!');
+			value = '';
 		} else {
-			alert('Fejl ved gemning');
+			alert('Fejl!');
 		}
-
-		blodsukker = '';
 	};
 </script>
 
-<h1 class="text-center text-2xl font-bold">
-	Registrer dit blodsukker
-</h1>
+<h1 class="text-center text-2xl font-bold"> Registrer dit blodsukker </h1>
 
 <div class="flex justify-center">
 	<div class="flex flex-col items-center gap-4">
 		<input
 			type="text"
-			bind:value={blodsukker}
-			placeholder="Indtast blodsukker mmol/l"
+			bind:value={value}
+			placeholder="Indtast værdi"
 			class="input input-bordered w-72"
 		/>
 
-		<button class="btn btn-primary w-72" onclick={gemBlodsukker}>
+		<button class="btn btn-primary w-72" onclick={saveValue}>
 			Gem værdi
 		</button>
 	</div>

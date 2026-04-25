@@ -15,10 +15,15 @@
 		const data = await response.json();
 
 		if (response.ok) {
+			localStorage.setItem('username', username);
 			goto('/blodsukker');
 		} else {
 			alert('Login fejlet!');
 		}
+	};
+
+	const goToOpret = () => {
+		goto('/opret');
 	};
 
 </script>
