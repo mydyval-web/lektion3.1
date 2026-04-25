@@ -1,29 +1,31 @@
 <script>
 	import { createSubscriber } from 'svelte/reactivity';
-	import { goto } from '$app/navigation';
 
 	let username = $state('');
 	let password = $state('');
 
-	const login = async () => {
-		const response = await fetch('/api/login', {
+	const createUser = async () => {
+		const response = await fetch('/api/user', {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: {
+				'Content-Type': 'application/json'
+			},
 			body: JSON.stringify({ username, password })
 		});
-
-		const data = await response.json();
+		await response.json();
 
 		if (response.ok) {
-			goto('/blodsukker');
+			alert('Bruger oprettet!');
 		} else {
-			alert('Login fejlet!');
+			alert('Fejl ved oprettelse af bruger!');
 		}
-	};
 
+		username = '';
+		password = '';
+	};
 </script>
 
-<h1 class="text-center text-3xl font-bold mb-8"> Login </h1>
+<h1 class="text-center text-2xl font-bold"> Opret en bruger </h1>
 
 <div class="flex justify-center">
 	<div class="flex flex-col items-center gap-4">
@@ -37,16 +39,12 @@
 		<input
 			type="password"
 			bind:value={password}
-			placeholder="Kodeord"
+			placeholder="Adgangskode"
 			class="input input-bordered w-72"
 		/>
 
-		<button class="btn btn-primary w-72" onclick={login}>
-			Login
-		</button>
-
-		<button class="btn w-72" onclick={goToOpret}>
-			Gå til opret bruger
+		<button class="btn btn-primary w-72" onclick={createUser}>
+			Opret bruger
 		</button>
 	</div>
 </div>
