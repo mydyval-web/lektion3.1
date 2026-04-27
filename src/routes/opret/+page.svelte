@@ -1,5 +1,5 @@
 <script>
-	import { createSubscriber } from 'svelte/reactivity';
+	import { goto } from '$app/navigation';
 
 	let username = $state('');
 	let password = $state('');
@@ -12,6 +12,7 @@
 			},
 			body: JSON.stringify({ username, password })
 		});
+
 		await response.json();
 
 		if (response.ok) {
@@ -22,6 +23,10 @@
 
 		username = '';
 		password = '';
+	};
+
+	const goToLogin = () => {
+		goto('/login');
 	};
 </script>
 
@@ -46,5 +51,10 @@
 		<button class="btn btn bg-blue-600 btn-primary w-72" onclick={createUser}>
 			Opret bruger
 		</button>
+
+		<button class="btn w-72" onclick={goToLogin}>
+			Gå tilbage til login
+		</button>
+
 	</div>
 </div>

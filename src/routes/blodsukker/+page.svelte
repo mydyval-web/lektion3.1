@@ -22,7 +22,7 @@
 		});
 
 		if (res.ok) {
-			const numberValue = Number(value);
+			const numberValue = Number(value.replace(',', '.'));
 
 			lastValue = value;
 
