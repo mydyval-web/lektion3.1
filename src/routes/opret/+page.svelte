@@ -43,7 +43,7 @@
 			class="input input-bordered w-72"
 		/>
 
-		<button class="btn btn-primary w-72" onclick={createUser}>
+		<button class="btn btn bg-blue-600 btn-primary w-72" onclick={createUser}>
 			Opret bruger
 		</button>
 	</div>

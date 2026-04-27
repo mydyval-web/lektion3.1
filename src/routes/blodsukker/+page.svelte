@@ -1,5 +1,4 @@
 <script>
-
 	import { goto } from '$app/navigation';
 
 	let value = $state('');
@@ -14,12 +13,10 @@
 	});
 
 	const saveValue = async () => {
-		const token = localStorage.getItem('token');
 		const res = await fetch('/api/blodsukker', {
 			method: 'POST',
 			headers: {
-				'Content-Type': 'application/json',
-				Authorization: `Bearer ${token}`
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({ value })
 		});
@@ -45,8 +42,11 @@
 				statusText = 'Kritisk høj';
 				statusClass = 'bg-red-200';
 			}
+
+			value = '';
 		}
 	};
+
 	const goToRaad = () => {
 		goto('/raad');
 	};
@@ -54,6 +54,12 @@
 	const goToData = () => {
 		goto('/data');
 	};
+	const logout = async () => {await fetch('/api/logout', {
+		method: 'POST'
+	});
+
+	goto('/login');
+};
 </script>
 
 <h1 class="text-center text-2xl font-bold">Registrer dit blodsukker</h1>
@@ -67,8 +73,8 @@
 			class="input input-bordered w-72"
 		/>
 
-		<button class="btn btn-primary w-72" onclick={saveValue}>
-			Gem værdi
+		<button class="btn bg-blue-600 btn-primary w-72" onclick={saveValue}>
+			Gem værdi og få feedback
 		</button>
 
 		{#if lastValue}
@@ -78,7 +84,6 @@
 			</div>
 		{/if}
 
-		<!-- Knapper vises altid -->
 		<button class="btn w-72" onclick={goToRaad}>
 			Gode råd
 		</button>
@@ -86,5 +91,10 @@
 		<button class="btn w-72" onclick={goToData}>
 			Se tidligere målinger
 		</button>
+
+		<button class="btn bg-red-600 btn-primary w-72" onclick={logout}>
+			Log ud
+		</button>
+
 	</div>
 </div>

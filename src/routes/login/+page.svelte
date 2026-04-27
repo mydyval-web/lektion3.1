@@ -45,7 +45,7 @@
 			class="input input-bordered w-72"
 		/>
 
-		<button class="btn btn-primary w-72" onclick={login}>
+		<button class="btn bg-blue-600 btn-primary w-72" onclick={login}>
 			Login
 		</button>
 

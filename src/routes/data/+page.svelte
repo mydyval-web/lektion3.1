@@ -5,13 +5,7 @@
 	let loading = $state(true);
 
 	const loadValues = async () => {
-		const token = localStorage.getItem('token');
-
-		const res = await fetch('/api/blodsukker', {
-			headers: {
-				Authorization: `Bearer ${token}`
-			}
-		});
+		const res = await fetch('/api/blodsukker');
 
 		if (res.ok) {
 			values = await res.json();
