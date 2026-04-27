@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import { db } from '$lib/server/db';
 import { user } from '$lib/server/db/schema.js';
 import { eq } from 'drizzle-orm';
+import jwt from 'jsonwebtoken';
 import { env } from '$env/dynamic/private';
 
-export async function POST({ request }) {
+export async function POST({ request, cookies }) {
 	const { username, password } = await request.json();
 
 	const userData = await db.query.user.findFirst({
@@ -23,15 +23,20 @@ export async function POST({ request }) {
 	}
 
 	const token = jwt.sign(
-		{ userId: userData.id, username: userData.username },
+		{ id: userData.id, username: username },
 		env.JWT_SECRET,
 		{ expiresIn: '1h' }
 	);
 
+	cookies.set('session', token, {
+		path: '/',
+		httpOnly: true,
+		maxAge: 60 * 60
+	});
+
 	return new Response(
 		JSON.stringify({
-			message: 'Login successful',
-			token
+			message: 'Login successful'
 		}),
 		{ status: 200 }
 	);
