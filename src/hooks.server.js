@@ -1,10 +1,11 @@
 import { env } from '$env/dynamic/private';
 import jwt from 'jsonwebtoken';
 
+
 export async function handle({ event, resolve }) {
 	const token = event.cookies.get('session');
 
-	if (['/', '/login', '/api/login'].includes(event.url.pathname)) {
+	if (['/', '/login', '/api/login', '/opret', '/api/user'].includes(event.url.pathname)) {
 		return await resolve(event);
 	}
 
