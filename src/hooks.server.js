@@ -21,7 +21,7 @@ export async function handle({ event, resolve }) {
 		}
 	}
 
-	return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+	return new Response(JSON.stringify({ error: 'Ikke autoriseret' }), {
 		status: 401
 	});
 }
