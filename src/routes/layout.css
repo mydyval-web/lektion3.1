@@ -1,7 +1,2 @@
 @import 'tailwindcss';
 @plugin "daisyui";
-
-html, body {
-	margin: 0;
-	padding: 0;
-}
