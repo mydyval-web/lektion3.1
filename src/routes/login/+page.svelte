@@ -27,7 +27,9 @@
 
 </script>
 
-<h1 class="text-center text-3xl font-bold mb-8"> Login </h1>
+<h1 class="text-center text-4xl font-bold mb-2"> TrygDiabetes </h1>
+
+<h2 class="text-center text-2xl font-semibold mb-8"> Login </h2>
 
 <div class="flex justify-center">
 	<div class="flex flex-col items-center gap-4">
